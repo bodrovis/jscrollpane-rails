@@ -26,7 +26,7 @@ NOTE: this is a jQuery plugin so you will also need the `jquery-rails` gem:
 
 * https://github.com/rails/jquery-rails
 
-It is also recommended (but is optional) to include jQuery MouseWheel plugin
+It is also recommended (but is optional) to include jQuery MouseWheel plugin by Brandon Aaron
 (https://github.com/brandonaaron/jquery-mousewheel/) to allow people to scroll your content
 using their mouse wheel. There is a gem `jquery-mousewheel-rails` available:
 
