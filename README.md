@@ -1,4 +1,4 @@
-# JScrollPane::Rails
+# jScrollPane plugin for Rails
 
 [![Gem Version](https://badge.fury.io/rb/jscrollpane-rails.png)](http://badge.fury.io/rb/jscrollpane-rails)
 
