@@ -41,7 +41,7 @@ by including jQuery MouseWheel Intent plugin by trixta. There is a gem `mwheelin
 
 In your `application.js` you will need to add this line:
 
-    //= require jscrollpane
+    //= require jquery.jscrollpane
    
 And in your `application.css` you will need to add this line:
 
