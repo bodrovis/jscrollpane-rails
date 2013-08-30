@@ -32,6 +32,11 @@ using their mouse wheel. There is a gem `jquery-mousewheel-rails` available:
 
 * https://github.com/crazymykl/jquery-mousewheel-rails
 
+This is totally optional but you can increase the usability of the mousewheel in nested scroll areas
+by including jQuery MouseWheel Intent plugin by trixta. There is a gem `mwheelintent-rails` available:
+
+* https://github.com/bodrovis/mwheelintent-rails
+
 ## Usage
 
 In your `application.js` you will need to add this line:
