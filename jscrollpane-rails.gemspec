@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.name          = "jscrollpane-rails"
   gem.require_paths = ["lib"]
   gem.version       = JScrollPane::Rails::VERSION
-  gem.license = 'MIT'
+  gem.license       = 'MIT'
 
-  gem.add_dependency "railties", "~> 3.1"
+  gem.add_dependency "railties", ">= 3.1"
 end
