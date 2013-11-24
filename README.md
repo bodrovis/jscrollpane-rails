@@ -38,7 +38,7 @@ There is a gem `mwheelintent-rails` available:
 
 * https://github.com/bodrovis/mwheelintent-rails
 
-FOR RUSSIAN SPEAKERS: There is a guide available describing basic usage of jScrollPane: http://www.radiant-wind.com/categories/vikipediya/posts/nestandartnaya-polosa-prokrutki-s-pomoschyu-javascript.
+FOR RUSSIAN SPEAKERS: There is a guide available describing basic usage of jScrollPane: http://www.radiant-wind.com/categories/javascript/posts/nestandartnaya-polosa-prokrutki-s-pomoschyu-javascript.
 
 ## Usage
 
