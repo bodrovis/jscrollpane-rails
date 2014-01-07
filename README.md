@@ -59,3 +59,9 @@ And in your `application.css` you will need to add this line:
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## License
+
+This plugin is licensed under the [MIT License](https://github.com/bodrovis/RadiantScroller/blob/master/LICENSE).
+
+Copyright (c) 2014 [Ilya Bodrov](http://radiant-wind.com)
