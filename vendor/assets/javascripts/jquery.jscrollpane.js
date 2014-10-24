@@ -1,14 +1,14 @@
 /*!
- * jScrollPane - v2.0.19 - 2013-11-16
+ * jScrollPane - v2.0.20 - 2014-10-23
  * http://jscrollpane.kelvinluck.com/
  *
- * Copyright (c) 2013 Kelvin Luck
+ * Copyright (c) 2014 Kelvin Luck
  * Dual licensed under the MIT or GPL licenses.
  */
 
 // Script: jScrollPane - cross browser customisable scrollbars
 //
-// *Version: 2.0.19, Last updated: 2013-11-16*
+// *Version: 2.0.20, Last updated: 2014-10-23*
 //
 // Project Home - http://jscrollpane.kelvinluck.com/
 // GitHub       - http://github.com/vitch/jScrollPane
@@ -17,7 +17,7 @@
 //
 // About: License
 //
-// Copyright (c) 2013 Kelvin Luck
+// Copyright (c) 2014 Kelvin Luck
 // Dual licensed under the MIT or GPL Version 2 licenses.
 // http://jscrollpane.kelvinluck.com/MIT-LICENSE.txt
 // http://jscrollpane.kelvinluck.com/GPL-LICENSE.txt
@@ -39,6 +39,7 @@
 //
 // About: Release History
 //
+// 2.0.20 - (2014-10-23) Adds AMD support (thanks @carlosrberto) and support for overflow-x/overflow-y (thanks @darimpulso)
 // 2.0.19 - (2013-11-16) Changes for more reliable scroll amount with latest mousewheel plugin (thanks @brandonaaron)
 // 2.0.18 - (2013-10-23) Fix for issue with gutters and scrollToElement (thanks @Dubiy)
 // 2.0.17 - (2013-08-17) Working correctly when box-sizing is set to border-box (thanks @pieht)
@@ -61,7 +62,21 @@
 //							 elements and dynamically sized elements.
 // 1.x - (2006-12-31 - 2010-07-31) Initial version, hosted at googlecode, deprecated
 
-(function($,window,undefined){
+(function (plugin, window) {
+    var factory = function($){
+        return plugin($, window);
+    }
+    if ( typeof define === 'function' && define.amd ) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else if (typeof exports === 'object') {
+        // Node/CommonJS style for Browserify
+        module.exports = factory;
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+}(function($,window,undefined){
 
     $.fn.jScrollPane = function(settings)
     {
@@ -705,7 +720,7 @@
                 }
 
                 container.scrollTop(0);
-                verticalDragPosition = destY;
+                verticalDragPosition = destY || 0;
 
                 var isAtTop = verticalDragPosition === 0,
                     isAtBottom = verticalDragPosition == dragMaxY,
@@ -752,7 +767,7 @@
                 }
 
                 container.scrollTop(0);
-                horizontalDragPosition = destX;
+                horizontalDragPosition = destX ||0;
 
                 var isAtLeft = horizontalDragPosition === 0,
                     isAtRight = horizontalDragPosition == dragMaxX,
@@ -879,6 +894,10 @@
                 container.unbind(mwEvent).bind(
                     mwEvent,
                     function (event, delta, deltaX, deltaY) {
+
+                        if (!horizontalDragPosition) horizontalDragPosition = 0;
+                        if (!verticalDragPosition) verticalDragPosition = 0;
+
                         var dX = horizontalDragPosition, dY = verticalDragPosition, factor = event.deltaFactor || settings.mouseWheelSpeed;
                         jsp.scrollBy(deltaX * factor, -deltaY * factor, false);
                         // return true if there was no movement so rest of screen can scroll
@@ -1445,4 +1464,4 @@
         scrollPagePercent			: .8		// Percent of visible area scrolled when pageUp/Down or track area pressed
     };
 
-})(jQuery,this);
+},this));
