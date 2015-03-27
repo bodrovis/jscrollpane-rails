@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.summary       = "Includes javascript and css files for the jScrollPane plugin."
   gem.homepage      = "https://github.com/bodrovis/jscrollpane-rails"
 
-  gem.files         = Dir["{lib,vendor}/**/*"] + ["LICENSE", "README.md"]
+  gem.files         = Dir["{lib,app}/**/*"] + ["LICENSE", "README.md"]
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "jscrollpane-rails"
