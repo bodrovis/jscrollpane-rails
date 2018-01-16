@@ -2,11 +2,10 @@
 
 [![Gem Version](https://badge.fury.io/rb/jscrollpane-rails.png)](http://badge.fury.io/rb/jscrollpane-rails)
 
-A ruby gem that uses the Rails asset pipeline to include the jScrollPane plugin by Kelvin Luck
- (www.kelvinluck.com):
+A ruby gem that uses the Rails asset pipeline to include the jScrollPane plugin by Kelvin Luck and Tuukka Pasanen:
 
-* Homepage: http://jscrollpane.kelvinluck.com/
-* Source Code: https://github.com/vitch/jScrollPane
+* [Homepage](http://jscrollpane.kelvinluck.com/)
+* [Source Code](https://github.com/vitch/jScrollPane)
 
 ## Installation
 
@@ -22,7 +21,7 @@ Or install it yourself as:
 
     $ gem install jscrollpane-rails
 
-NOTE: this is a jQuery plugin so you will also need the `jquery-rails` gem:
+This is a jQuery plugin so you will also need the `jquery-rails` gem (for instance, Rails 5.1 does not have this gem by default anymore):
 
 * https://github.com/rails/jquery-rails
 
@@ -40,17 +39,21 @@ There is a gem `mwheelintent-rails` available:
 
 FOR RUSSIAN SPEAKERS: There is a guide available describing basic usage of jScrollPane: http://bodrovis.tech/categories/javascript-css-html/posts/nestandartnaya-polosa-prokrutki-s-pomoschyu-javascript
 
-FOR ENGLISH SPEAKERS: The same guide is now availble in English: http://bodrovis.tech/categories/javascript-css-html/posts/creating-custom-scrollpane-using-javascript
+FOR ENGLISH SPEAKERS: The same guide is now available in English: http://bodrovis.tech/categories/javascript-css-html/posts/creating-custom-scrollpane-using-javascript
 
 ## Usage
 
 In your `application.js` you will need to add this line:
 
-    //= require jquery.jscrollpane
-   
-And in your `application.css` you will need to add this line:
+```js
+//= require jquery.jscrollpane
+```
 
-    *= require jscrollpane
+And in your `application.scss` you will need to add this line:
+
+```scss
+@import('jscrollpane');
+```
 
 ## Contributing
 
@@ -62,6 +65,6 @@ And in your `application.css` you will need to add this line:
 
 ## License
 
-This plugin is licensed under the [MIT License](https://github.com/bodrovis/RadiantScroller/blob/master/LICENSE).
+This plugin is licensed under the [MIT License](https://github.com/bodrovis/jscrollpane-rails/blob/master/LICENSE).
 
-Copyright (c) 2016 [Ilya Bodrov](http://bodrovis.tech)
+Copyright (c) 2018 [Ilya Bodrov](http://bodrovis.tech)
