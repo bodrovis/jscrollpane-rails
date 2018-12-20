@@ -1,5 +1,5 @@
 /*!
- * jScrollPane - v2.1.1 - 2018-01-12
+ * jScrollPane - v2.2.1 - 2018-09-27
  * http://jscrollpane.kelvinluck.com/
  *
  * Copyright (c) 2014 Kelvin Luck
@@ -9,12 +9,15 @@
 
 // Script: jScrollPane - cross browser customisable scrollbars
 //
-// *Version: 2.1.1, Last updated: 2018-01-12*
+// *Version: 2.2.1, Last updated: 2018-09-27*
 //
 // Project Home - http://jscrollpane.kelvinluck.com/
 // GitHub       - http://github.com/vitch/jScrollPane
-// Source       - http://github.com/vitch/jScrollPane/raw/master/script/jquery.jscrollpane.js
-// (Minified)   - http://github.com/vitch/jScrollPane/raw/master/script/jquery.jscrollpane.min.js
+// CND          - https://cdnjs.com/libraries/jScrollPane
+// Source       - https://cdnjs.cloudflare.com/ajax/libs/jScrollPane/2.2.1/script/jquery.jscrollpane.min.js
+// (Minified)   - https://cdnjs.cloudflare.com/ajax/libs/jScrollPane/2.2.1/script/jquery.jscrollpane.js
+// CSS          - https://cdnjs.cloudflare.com/ajax/libs/jScrollPane/2.2.1/style/jquery.jscrollpane.css
+// (Minified)   - https://cdnjs.cloudflare.com/ajax/libs/jScrollPane/2.2.1/style/jquery.jscrollpane.min.css
 //
 // About: License
 //
@@ -42,7 +45,28 @@
 //
 // About: Release History
 //
-// 2.1.1  - (2018-01-12) As everyone stays silent then we just release! No changes from RC.1
+// 2.2.1       - (2018-09-27) No changed applied to release so same as RC1/2
+// 2.2.1-rc.2  - (2018-06-14) Sucked NPM release have to make new Release.. this is 2018!
+// 2.2.1-rc.1  - (2018-06-14) Fixed CSSLint warnings which can lead CSS problems in
+//                            production! Please report a issue if this breaks something!
+//                            * Merged:
+//                            - #360 Register to globally available version of jQuery
+// 2.2.0       - (2018-05-16) No changes to RC1
+// 2.2.0-rc.1  - (2018-04-28) Merged resize sensor to find out size changes of screen and
+//                            again little bit tuned this to support more npm goodies.
+//                            * Merged:
+//                            - #361 Event based reinitialising - Resize Sensor
+//                            - #359 Use npm scripts and local dev dependencies to build the project
+// 2.1.3       - (2018-04-04) No changes from Release Candidate 2 so making release
+// 2.1.3-rc.2  - (2018-03-13) Now using 'script/jquery.jscrollpane.min.js' main
+//                            in package.json rather than 'Gruntfile.js'
+// 2.1.3-rc.1  - (2018-03-05) Moving Gruntfile.js to root and example HTML
+//                            to subdirectory examples
+// 2.1.2       - (2018-02-16) Just on console.log remove and Release!
+//                            This version should play nicely with NPM
+// 2.1.2-rc.2  - (2018-02-03) Update package.json main-tag
+// 2.1.2-rc.1  - (2018-01-18) Release on NPM.
+// 2.1.1       - (2018-01-12) As everyone stays silent then we just release! No changes from RC.1
 // 2.1.1-rc.1  - (2017-12-23) Started to slowly merge stuff (HO HO HO Merry Christmas!)
 //             * Merged
 //             - #349 - ScrollPane reinitialization should adapt to changed container size
@@ -51,17 +75,6 @@
 //             * Bugs
 //             - #8 Make it possible to tell a scrollbar to be "always on"
 // 2.1.0  - (2017-12-16) Update jQuery to version 3.x
-// 2.0.23 - (2016-01-28) Various
-// 2.0.22 - (2015-04-25) Resolve a memory leak due to an event handler that isn't cleaned up in destroy (thanks @timjnh)
-// 2.0.21 - (2015-02-24) Simplify UMD pattern: fixes browserify when loading jQuery outside of bundle
-// 2.0.20 - (2014-10-23) Adds AMD support (thanks @carlosrberto) and support for overflow-x/overflow-y (thanks @darimpulso)
-// 2.0.19 - (2013-11-16) Changes for more reliable scroll amount with latest mousewheel plugin (thanks @brandonaaron)
-// 2.0.18 - (2013-10-23) Fix for issue with gutters and scrollToElement (thanks @Dubiy)
-// 2.0.17 - (2013-08-17) Working correctly when box-sizing is set to border-box (thanks @pieht)
-// 2.0.16 - (2013-07-30) Resetting left position when scroll is removed. Fixes #189
-// 2.0.15 - (2013-07-29) Fixed issue with scrollToElement where the destX and destY are undefined.
-// 2.0.14 - (2013-05-01) Updated to most recent mouse wheel plugin (see #106) and related changes for sensible scroll speed
-// 2.0.13 - (2013-05-01) Switched to semver compatible version name
 
 (function (factory) {
   if ( typeof define === 'function' && define.amd ) {
@@ -69,7 +82,7 @@
     define(['jquery'], factory);
   } else if (typeof exports === 'object') {
     // Node/CommonJS style for Browserify
-    module.exports = factory(require('jquery'));
+    module.exports = factory(jQuery || require('jquery'));
   } else {
     // Browser globals
     factory(jQuery);
@@ -88,8 +101,20 @@
           horizontalBar, horizontalTrack, horizontalTrackWidth, horizontalDragWidth, arrowLeft, arrowRight,
           reinitialiseInterval, originalPadding, originalPaddingTotalWidth, previousContentWidth,
           wasAtTop = true, wasAtLeft = true, wasAtBottom = false, wasAtRight = false,
-          originalElement = elem.clone(false, false).empty(),
+          originalElement = elem.clone(false, false).empty(), resizeEventsAdded = false,
           mwEvent = $.fn.mwheelIntent ? 'mwheelIntent.jsp' : 'mousewheel.jsp';
+
+      var reinitialiseFn = function() {
+        // if size has changed then reinitialise
+        if (settings.resizeSensorDelay > 0) {
+          setTimeout(function() {
+            initialise(settings);
+          }, settings.resizeSensorDelay);
+        }
+        else {
+          initialise(settings);
+        }
+      };
 
       if (elem.css('box-sizing') === 'border-box') {
         originalPadding = 0;
@@ -161,7 +186,6 @@
 
           newPaneWidth = elem.innerWidth() + originalPaddingTotalWidth;
           newPaneHeight = elem.innerHeight();
-          console.log('newPaneHeight = ' + newPaneHeight);
           pane.css('position', 'absolute');
 
           maintainAtBottom = settings.stickToBottom && isCloseToBottom();
@@ -199,8 +223,6 @@
         percentInViewV = contentHeight / paneHeight;
         isScrollableV = percentInViewV > 1 || settings.alwaysShowVScroll;
         isScrollableH = percentInViewH > 1 || settings.alwaysShowHScroll;
-
-        //console.log(paneWidth, paneHeight, contentWidth, contentHeight, percentInViewH, percentInViewV, isScrollableH, isScrollableV);
 
         if (!(isScrollableH || isScrollableV)) {
           elem.removeClass('jspScrollable');
@@ -248,7 +270,7 @@
           }
         }
 
-        if (settings.autoReinitialise && !reinitialiseInterval) {
+        if (!settings.resizeSensor && settings.autoReinitialise && !reinitialiseInterval) {
           reinitialiseInterval = setInterval(
               function()
               {
@@ -256,8 +278,25 @@
               },
               settings.autoReinitialiseDelay
           );
-        } else if (!settings.autoReinitialise && reinitialiseInterval) {
+        } else if (!settings.resizeSensor && !settings.autoReinitialise && reinitialiseInterval) {
           clearInterval(reinitialiseInterval);
+        }
+
+        if(settings.resizeSensor && !resizeEventsAdded) {
+
+          // detect size change in content
+          detectSizeChanges(pane, reinitialiseFn);
+
+          // detect size changes of scroll element
+          detectSizeChanges(elem, reinitialiseFn);
+
+          // detect size changes of container
+          detectSizeChanges(elem.parent(), reinitialiseFn);
+
+          // add a reinit on window resize also for safety
+          window.addEventListener('resize', reinitialiseFn);
+
+          resizeEventsAdded = true;
         }
 
         if(originalScrollTop && elem.scrollTop(0)) {
@@ -269,6 +308,88 @@
         }
 
         elem.trigger('jsp-initialised', [isScrollableH || isScrollableV]);
+      }
+
+      function detectSizeChanges(element, callback) {
+
+        // create resize event elements - based on resize sensor: https://github.com/flowkey/resize-sensor/
+        var resizeWidth, resizeHeight;
+        var resizeElement = document.createElement('div');
+        var resizeGrowElement = document.createElement('div');
+        var resizeGrowChildElement = document.createElement('div');
+        var resizeShrinkElement = document.createElement('div');
+        var resizeShrinkChildElement = document.createElement('div');
+
+        // add necessary styling
+        resizeElement.style.cssText = 'position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: scroll; z-index: -1; visibility: hidden;';
+        resizeGrowElement.style.cssText = 'position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: scroll; z-index: -1; visibility: hidden;';
+        resizeShrinkElement.style.cssText = 'position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: scroll; z-index: -1; visibility: hidden;';
+
+        resizeGrowChildElement.style.cssText = 'position: absolute; left: 0; top: 0;';
+        resizeShrinkChildElement.style.cssText = 'position: absolute; left: 0; top: 0; width: 200%; height: 200%;';
+
+        // Create a function to programmatically update sizes
+        var updateSizes = function() {
+
+          resizeGrowChildElement.style.width = resizeGrowElement.offsetWidth + 10 + 'px';
+          resizeGrowChildElement.style.height = resizeGrowElement.offsetHeight + 10 + 'px';
+
+          resizeGrowElement.scrollLeft = resizeGrowElement.scrollWidth;
+          resizeGrowElement.scrollTop = resizeGrowElement.scrollHeight;
+
+          resizeShrinkElement.scrollLeft = resizeShrinkElement.scrollWidth;
+          resizeShrinkElement.scrollTop = resizeShrinkElement.scrollHeight;
+
+          resizeWidth = element.width();
+          resizeHeight = element.height();
+        };
+
+        // create functions to call when content grows
+        var onGrow = function() {
+
+          // check to see if the content has change size
+          if (element.width() > resizeWidth || element.height() > resizeHeight) {
+
+            // if size has changed then reinitialise
+            callback.apply(this, []);
+          }
+          // after reinitialising update sizes
+          updateSizes();
+        };
+
+        // create functions to call when content shrinks
+        var onShrink = function() {
+
+          // check to see if the content has change size
+          if (element.width() < resizeWidth || element.height() < resizeHeight) {
+
+            // if size has changed then reinitialise
+            callback.apply(this, []);
+          }
+          // after reinitialising update sizes
+          updateSizes();
+        };
+
+        // bind to scroll events
+        resizeGrowElement.addEventListener('scroll', onGrow.bind(this));
+        resizeShrinkElement.addEventListener('scroll', onShrink.bind(this));
+
+        // nest elements before adding to pane
+        resizeGrowElement.appendChild(resizeGrowChildElement);
+        resizeShrinkElement.appendChild(resizeShrinkChildElement);
+
+        resizeElement.appendChild(resizeGrowElement);
+        resizeElement.appendChild(resizeShrinkElement);
+
+        element.append(resizeElement);
+
+        // ensure parent element is not statically positioned
+        if(window.getComputedStyle(element[0], null).getPropertyValue('position') === 'static') {
+          element[0].style.position = 'relative';
+        }
+
+        // update sizes initially
+        updateSizes();
       }
 
       function initialiseVerticalScroll()
@@ -1534,6 +1655,8 @@
     scrollPagePercent			: 0.8,		// Percent of visible area scrolled when pageUp/Down or track area pressed
     alwaysShowVScroll			: false,
     alwaysShowHScroll			: false,
+    resizeSensor				: false,
+    resizeSensorDelay			: 0,
   };
 
 }));

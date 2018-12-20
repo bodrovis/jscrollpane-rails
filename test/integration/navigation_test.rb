@@ -7,12 +7,12 @@ class NavigationTest < ActionDispatch::IntegrationTest
   end
 
   test 'can access jscrollpane.css' do
-    get '/assets/jscrollpane.css'
+    get '/assets/jquery.jscrollpane.css'
     assert_response :success
   end
 
   test 'slick response is for the expected version' do
     get '/assets/jquery.jscrollpane.js'
-    assert_match(/v2\.1\.1/, @response.body)
+    assert_match(/v2\.2\.1/, @response.body)
   end
 end

@@ -2,7 +2,6 @@
 
 [![Gem Version](https://badge.fury.io/rb/jscrollpane-rails.png)](http://badge.fury.io/rb/jscrollpane-rails)
 [![Build Status](https://travis-ci.org/bodrovis/jscrollpane-rails.svg?branch=master)](https://travis-ci.org/bodrovis/jscrollpane-rails)
-[![Dependency Status](https://gemnasium.com/badges/github.com/bodrovis/jscrollpane-rails.svg)](https://gemnasium.com/github.com/bodrovis/jscrollpane-rails)
 
 A ruby gem that uses the Rails asset pipeline to include the jScrollPane plugin by Kelvin Luck and Tuukka Pasanen:
 
@@ -54,7 +53,7 @@ In your `application.js` you will need to add this line:
 And in your `application.scss` you will need to add this line:
 
 ```scss
-@import 'jscrollpane';
+@import 'jquery.jscrollpane';
 ```
 
 ## Testing
@@ -81,6 +80,6 @@ $ rake test
 
 ## License
 
-This plugin is licensed under the [MIT License](https://github.com/bodrovis/jscrollpane-rails/blob/master/LICENSE).
+This plugin is licensed under the [MIT license](https://github.com/bodrovis/jscrollpane-rails/blob/master/LICENSE). The jScrollPane itself is dual-licensed under the [GPL 2 license](https://github.com/vitch/jScrollPane/blob/master/GPL-LICENSE.txt) and the MIT license.
 
 Copyright (c) 2018 [Ilya Bodrov](http://bodrovis.tech)

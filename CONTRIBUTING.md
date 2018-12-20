@@ -6,7 +6,7 @@ I am not an author of jScrollPane and do not maintain it. Same for Turbolinks an
 
 If you wish to report a **problem related to this gem**, please provide
 
-* Syptoms of the problem
+* Symptoms of the problem
 * Your Rails version
 * Version of the gem you are using
 * Error stack trace
