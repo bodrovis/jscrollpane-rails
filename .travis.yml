@@ -4,6 +4,6 @@ sudo: false
 rvm:
   - 2.3.8
   - 2.4.5
-  - 2.5.3
+  - 2.5.5
 
 install: bundle install --retry=3
