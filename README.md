@@ -1,6 +1,6 @@
 # jScrollPane plugin for Rails
 
-[![Gem Version](https://badge.fury.io/rb/jscrollpane-rails.png)](http://badge.fury.io/rb/jscrollpane-rails)
+[![Gem Version](https://badge.fury.io/rb/jscrollpane-rails.svg)](http://badge.fury.io/rb/jscrollpane-rails)
 [![Build Status](https://travis-ci.org/bodrovis/jscrollpane-rails.svg?branch=master)](https://travis-ci.org/bodrovis/jscrollpane-rails)
 
 A Ruby gem that uses the Rails asset pipeline to include the jScrollPane plugin by Kelvin Luck and Tuukka Pasanen:
