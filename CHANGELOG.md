@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.3-rc.1 (10-Aug-20)
+
+* Bump to 2.2.3-rc.1 to follow the plugin's versioning
+
 ## 2.2.2 (10-Aug-20)
 
 * Bump to 2.2.2
