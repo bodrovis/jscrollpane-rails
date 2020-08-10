@@ -12,7 +12,9 @@ A Ruby gem that uses the Rails asset pipeline to include the jScrollPane plugin 
 
 Add this line to your application's Gemfile:
 
-    gem 'jscrollpane-rails'
+```ruby
+gem 'jscrollpane-rails'
+```
 
 And then execute:
 
@@ -82,4 +84,4 @@ $ rake test
 
 This plugin is licensed under the [MIT license](https://github.com/bodrovis/jscrollpane-rails/blob/master/LICENSE). The jScrollPane itself is dual-licensed under the [GPL 2 license](https://github.com/vitch/jScrollPane/blob/master/GPL-LICENSE.txt) and the MIT license.
 
-Copyright (c) 2018 [Ilya Bodrov](http://bodrovis.tech)
+Copyright (c) 2020 [Ilya Bodrov-Krukowski](http://bodrovis.tech)

@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.2 (10-Aug-20)
+
+* Bump to 2.2.2
+* Test against Rails 6 and more recent Rubies
+
 ## 2.2.1 (21-Dec-18)
 
 * Bump to 2.2.1
