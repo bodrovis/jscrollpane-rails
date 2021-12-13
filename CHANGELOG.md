@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.4 (13-Dec-21)
+
+* **This gem is deprecated**. Version 2.2.4 is the final release
+* Test with Rails 7
+
 ## 2.2.3-rc.1 (10-Aug-20)
 
 * Bump to 2.2.3-rc.1 to follow the plugin's versioning

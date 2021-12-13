@@ -1,5 +1,5 @@
 module JScrollPane
   module Rails
-    VERSION = '2.2.3-rc.1'
+    VERSION = '2.2.4'
   end
 end
